@@ -38,34 +38,29 @@ let line_to_round line =
 let string_to_score line =
   match_result (line_to_round line)
 
-let fold_file fn foldf acc_base =
+let file_to_strings fn =
   let inf = open_in fn in
-  let rec reader acc =
-    try
-      let line = input_line inf in
-      let a2 = foldf acc line in
-      reader a2
-    with _ ->
-      close_in_noerr inf;
-      acc
-  in
-    reader acc_base
+   let rec reader acc =
+      try
+        let line = input_line inf in
+        reader (line::acc)
+      with _ ->
+        close_in_noerr inf;
+        acc
+    in
+      reader []
 
-let summer sts tally line =
-  Printf.printf "%s " line;
-  let s = (sts line) in
-  Printf.printf "%d\n" s;
-  s + tally
+let sum_list = List.fold_left (fun a b -> a + b) 0
 
-let round_1 =
+let elflines = file_to_strings "elves.dat"
+
+let round_1 () =
   assert ((string_to_score "A Y") = 8);
   assert ((string_to_score "B X") = 1);
   assert ((string_to_score "C Z") = 6);
-  Printf.printf "%d" (fold_file "elves.dat" (summer string_to_score) 0)
+  Printf.printf "Round 1: %d\n" (sum_list (List.map string_to_score elflines))
 
-
-
-
+let () = round_1 ()
 
 
 

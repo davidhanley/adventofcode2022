@@ -22,7 +22,7 @@ let win = 6
 let tie = 3
 let loss = 0
 
-let match_result (his,mine) = my_value mine + (match (his,mine) with
+let first_match_result (his,mine) = my_value mine + (match (his,mine) with
   | (Rock,Paper) -> win
   | (Rock,Scissors) -> loss
   | (Paper,Scissors) -> win
@@ -31,9 +31,8 @@ let match_result (his,mine) = my_value mine + (match (his,mine) with
   | (Scissors,Paper) -> loss
   | _ -> tie)
 
-let line_to_round line =
-  let g = String.get line in
-  (char_to_shape (g 0), char_to_shape(g 2))
+let line_to_round_1 (h,m) =
+  (char_to_shape h, char_to_shape m)
 
 let file_to_strings fn =
   let inf = open_in fn in
@@ -55,12 +54,16 @@ let line_to_pair line =
   let g = String.get line in
   (g 0, g 2)
 
-let elfpairs = List.map line_to_round elflines
+let pairs = List.map line_to_pair elflines
 
 let round_1 () =
-  Printf.printf "Round 1: %d\n" (sum_list (List.map match_result elfpairs))
+  let shape_shape_pairs = List.map line_to_round_1 pairs in
+  Printf.printf "Round 1: %d\n" (sum_list (List.map first_match_result shape_shape_pairs))
 
-let () = round_1 ()
+
+
+let () =
+  round_1 ()
 
 
 

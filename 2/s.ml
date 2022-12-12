@@ -3,7 +3,7 @@
 
 type shapes = Rock | Paper | Scissors
 
-let mts m = match m with
+let char_to_shape m = match m with
   | 'A' | 'X' -> Rock
   | 'B' | 'Y' -> Paper
   | 'C' | 'Z'-> Scissors
@@ -33,10 +33,7 @@ let match_result (his,mine) = my_value mine + (match (his,mine) with
 
 let line_to_round line =
   let g = String.get line in
-  (mts (g 0), mts(g 2))
-
-let string_to_score line =
-  match_result (line_to_round line)
+  (char_to_shape (g 0), char_to_shape(g 2))
 
 let file_to_strings fn =
   let inf = open_in fn in
@@ -54,11 +51,14 @@ let sum_list = List.fold_left (fun a b -> a + b) 0
 
 let elflines = file_to_strings "elves.dat"
 
+let line_to_pair line =
+  let g = String.get line in
+  (g 0, g 2)
+
+let elfpairs = List.map line_to_round elflines
+
 let round_1 () =
-  assert ((string_to_score "A Y") = 8);
-  assert ((string_to_score "B X") = 1);
-  assert ((string_to_score "C Z") = 6);
-  Printf.printf "Round 1: %d\n" (sum_list (List.map string_to_score elflines))
+  Printf.printf "Round 1: %d\n" (sum_list (List.map match_result elfpairs))
 
 let () = round_1 ()
 

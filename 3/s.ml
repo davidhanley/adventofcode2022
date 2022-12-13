@@ -23,7 +23,6 @@ let char_scores ="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
 let char_score c =
   (String.rindex char_scores c) + 1
 
-
 let string_split str =
   let l = String.length str in
   let h = l / 2 in
@@ -32,6 +31,7 @@ let string_split str =
 let charsetset_of_string str =
   String.fold_left (fun set elem -> CharSet.add elem set) CharSet.empty str
 
+(* following is ugly and slow, but it works *)
 let score_sacks sacks =
   let sets = List.map charsetset_of_string sacks in
   let shared = List.fold_left CharSet.inter (List.hd sets) sets in
@@ -65,4 +65,4 @@ let second_part () =
 
 let () =
   first_part ();
-  second_part() 
+  second_part()

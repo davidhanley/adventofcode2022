@@ -11,9 +11,7 @@ let file_to_strings fn =
     in
       reader []
 
-
 let sum_list = List.fold_left (fun a b -> a + b) 0
-
 
 let string_to_pair str =
   let [p1;p2] = String.split_on_char '-' str in

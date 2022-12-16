@@ -2,8 +2,6 @@ open Set
 
 module CharSet = Set.Make(Char)
 
-let add s e = CharSet.add s e
-
 let sum_list = List.fold_left (fun a b -> a + b) 0
 
 let file_to_strings fn =
@@ -41,7 +39,8 @@ let score_sacks sacks =
 
 let sacks = file_to_strings "elves.dat"
 
-let partition list size =
+(* general function to partition a list into a list of lists of size 'n' *)
+let partition size list =
   let rec p l acc res = match l with
     | [] -> res
     | e::rest ->
@@ -59,7 +58,7 @@ let first_part () =
   Printf.printf "first: %d\n" v
 
 let second_part () =
-  let boxes = partition sacks 3 in
+  let boxes = partition 3 sacks in
   let v = sum_list (List.map score_sacks boxes ) in
     Printf.printf "first: %d\n" v
 

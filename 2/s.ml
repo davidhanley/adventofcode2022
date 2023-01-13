@@ -54,7 +54,7 @@ let file_to_strings fn =
     in
       reader []
 
-let sum_list = List.fold_left (fun a b -> a + b) 0
+let sum_list = List.fold_left (+) 0
 
 let elflines = file_to_strings "elves.dat"
 

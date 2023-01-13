@@ -9,8 +9,4 @@ let find_matching_window str size match_func =
 
 let match_func str = (String.to_seq str |> CharSet.of_seq |> CharSet.to_seq |> String.of_seq |> String.length) = String.length str
 
-let test_1 = "bvwbjplbgvbhsrlpgdmjqwftvncz"
-let test_2 = "nppdvjthqldpwncqszvftbrmjlhg"
-let test_3 = "nznrnfrfntjfmvfwmzdfjlvtqnbhcprsg"
-
 let () = Printf.printf "Position: %d\n" (find_matching_window dat 14 match_func)
